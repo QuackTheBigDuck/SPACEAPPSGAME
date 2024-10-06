@@ -1,0 +1,74 @@
+[gd_scene load_steps=6 format=3 uid="uid://c8i8d08vnpwu5"]
+
+[ext_resource type="Texture2D" uid="uid://c8ybelrif3eej" path="res://Apathetic.png" id="1_p1lcp"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mc5yh"]
+bg_color = Color(0.147672, 0.147672, 0.147672, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0dd4b"]
+bg_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 30
+corner_radius_top_right = 30
+corner_radius_bottom_right = 30
+corner_radius_bottom_left = 30
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_wtwr7"]
+texture = ExtResource("1_p1lcp")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yrox7"]
+bg_color = Color(0.0763855, 0.715276, 0.382943, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="playInfoBox" type="Panel" parent="."]
+layout_mode = 0
+offset_left = 33.0
+offset_top = 19.0
+offset_right = 385.0
+offset_bottom = 94.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_mc5yh")
+
+[node name="Bg_image" type="Panel" parent="playInfoBox"]
+layout_mode = 0
+offset_left = 5.0
+offset_top = 10.0
+offset_right = 67.0
+offset_bottom = 69.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_0dd4b")
+
+[node name="Bg_image2" type="Panel" parent="playInfoBox"]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 14.0
+offset_right = 61.0
+offset_bottom = 62.0
+theme_override_styles/panel = SubResource("StyleBoxTexture_wtwr7")
+
+[node name="ProgressBar" type="ProgressBar" parent="playInfoBox"]
+layout_mode = 0
+offset_left = 83.0
+offset_top = 38.0
+offset_right = 339.0
+offset_bottom = 65.0
+theme_override_styles/background = SubResource("StyleBoxFlat_yrox7")
+step = 100.0
+
+[node name="text" type="Label" parent="playInfoBox"]
+layout_mode = 0
+offset_left = 126.0
+offset_top = 11.0
+offset_right = 213.0
+offset_bottom = 34.0
+text = "Apathetic"

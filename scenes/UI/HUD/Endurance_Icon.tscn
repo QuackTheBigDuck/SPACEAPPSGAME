@@ -1,0 +1,71 @@
+[gd_scene load_steps=6 format=3 uid="uid://c8ryen0l4gfob"]
+
+[ext_resource type="Texture2D" uid="uid://cd1tmjio186uv" path="res://muscle.png" id="1_p87bh"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sdk2e"]
+bg_color = Color(0.147672, 0.147672, 0.147672, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ch5bp"]
+bg_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 30
+corner_radius_top_right = 30
+corner_radius_bottom_right = 30
+corner_radius_bottom_left = 30
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_qdvja"]
+texture = ExtResource("1_p87bh")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3rhux"]
+bg_color = Color(0.0763855, 0.715276, 0.382943, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+
+[node name="Node" type="Node"]
+
+[node name="playInfoBox" type="Panel" parent="."]
+offset_left = 33.0
+offset_top = 19.0
+offset_right = 385.0
+offset_bottom = 94.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_sdk2e")
+
+[node name="Bg_image" type="Panel" parent="playInfoBox"]
+layout_mode = 0
+offset_left = 5.0
+offset_top = 10.0
+offset_right = 67.0
+offset_bottom = 69.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_ch5bp")
+
+[node name="Bg_image2" type="Panel" parent="playInfoBox"]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 14.0
+offset_right = 61.0
+offset_bottom = 62.0
+theme_override_styles/panel = SubResource("StyleBoxTexture_qdvja")
+
+[node name="ProgressBar" type="ProgressBar" parent="playInfoBox"]
+layout_mode = 0
+offset_left = 83.0
+offset_top = 38.0
+offset_right = 339.0
+offset_bottom = 65.0
+theme_override_styles/background = SubResource("StyleBoxFlat_3rhux")
+step = 100.0
+
+[node name="text" type="Label" parent="playInfoBox"]
+layout_mode = 0
+offset_left = 126.0
+offset_top = 11.0
+offset_right = 213.0
+offset_bottom = 34.0
+text = "Endurance
+
+"
