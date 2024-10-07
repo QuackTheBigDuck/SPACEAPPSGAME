@@ -1,0 +1,335 @@
+[gd_scene load_steps=14 format=3 uid="uid://d31jmfyi3rg5"]
+
+[ext_resource type="Texture2D" uid="uid://c526c5dpl2px4" path="res://assets/images/MainUIImgs/astra_processed.png" id="2_mjdj3"]
+[ext_resource type="Texture2D" uid="uid://mdq2iwrcinxv" path="res://assets/images/MainUIImgs/Happiness - Copie.png" id="3_dl5aq"]
+[ext_resource type="Texture2D" uid="uid://ynmoikfm3t4j" path="res://assets/images/MainUIImgs/hunger (2).png" id="4_sex73"]
+[ext_resource type="Texture2D" uid="uid://c12sd6i45wela" path="res://assets/images/MainUIImgs/flash.png" id="5_gco5d"]
+
+[sub_resource type="GDScript" id="GDScript_2kd2x"]
+script/source = "extends Control
+
+# Variables to track player stats
+var energy: float = 5.0
+var strength: float = 5.0
+var happiness: float = 5.0
+var hunger: float = 5.0
+
+# Decrease rates per second
+const ENERGY_DECREASE_RATE = 0.05
+const HUNGER_DECREASE_RATE = 0.025
+const HAPPINESS_DECREASE_RATE = 0.01
+const STRENGTH_DECREASE_RATE = 0.01
+
+# References to UI elements
+@onready var energy_bar = $Energy_Bar
+@onready var strength_bar = $Strength_Bar
+@onready var happiness_bar = $Happiness_Bar
+@onready var hunger_bar = $Hunger_Bar
+
+func _ready():
+	# Check if all progress bars are found
+	if not energy_bar:
+		print(\"Energy_Bar not found\")
+	if not strength_bar:
+		print(\"Strength_Bar not found\")
+	if not happiness_bar:
+		print(\"Happiness_Bar not found\")
+	if not hunger_bar:
+		print(\"Hunger_Bar not found\")
+
+	# Connect button signals
+	var buttons = [
+		[\"Button_Spacewalks\", _on_spacewalk],
+		[\"Button_Zero-Gravity\", _on_zero_gravity],
+		[\"Button_Research and Discovery\", _on_research],
+		[\"Button_Mining and Resource Gathering\", _on_mining],
+		[\"Button_Eat\", _on_eat],
+		[\"Button_Rest\", _on_rest],
+		[\"Button_Stargazing\", _on_stargazing]
+	]
+	
+	for button_data in buttons:
+		var button = find_child(button_data[0])
+		if button:
+			button.pressed.connect(button_data[1])
+			print(button_data[0] + \" connected\")
+		else:
+			print(button_data[0] + \" not found\")
+	
+	# Initialize progress bars
+	update_bars()
+
+func _process(delta):
+	# Decrease stats over time
+	energy -= ENERGY_DECREASE_RATE * delta
+	hunger -= HUNGER_DECREASE_RATE * delta
+	happiness -= HAPPINESS_DECREASE_RATE * delta
+	strength -= STRENGTH_DECREASE_RATE * delta
+	
+	# Clamp values
+	clamp_values()
+	update_bars()
+
+func clamp_values():
+	energy = clamp(energy, 0, 10)
+	strength = clamp(strength, 0, 10)
+	happiness = clamp(happiness, 0, 10)
+	hunger = clamp(hunger, 0, 10)
+
+func update_bars():
+	if energy_bar:
+		energy_bar.value = energy * 10
+	if strength_bar:
+		strength_bar.value = strength * 10
+	if happiness_bar:
+		happiness_bar.value = happiness * 10
+	if hunger_bar:
+		hunger_bar.value = hunger * 10
+
+func _on_spacewalk():
+	energy -= 2
+	strength += 1
+	happiness += 1.5
+	hunger -= 1
+
+func _on_zero_gravity():
+	energy -= 1.5
+	strength += 2
+	happiness += 1
+	hunger -= 1
+
+func _on_research():
+	energy -= 1
+	strength -= 0.5
+	happiness += 1.5
+	hunger -= 0.5
+
+func _on_mining():
+	energy -= 2
+	strength += 1.5
+	happiness += 0.5
+	hunger -= 1.5
+
+func _on_eat():
+	energy += 1
+	hunger += 3
+	happiness += 1
+
+func _on_rest():
+	energy += 3
+	strength -= 0.5
+	happiness += 1
+	hunger -= 1
+
+func _on_stargazing():
+	energy -= 0.5
+	happiness += 2
+	hunger -= 0.5
+"
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_65vb1"]
+bg_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 90
+corner_radius_top_right = 90
+corner_radius_bottom_right = 90
+corner_radius_bottom_left = 90
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_imhq2"]
+texture = ExtResource("2_mjdj3")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cnslg"]
+bg_color = Color(0.0763855, 0.715276, 0.382943, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_6u55k"]
+texture = ExtResource("3_dl5aq")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_p4soi"]
+texture = ExtResource("4_sex73")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ngd3s"]
+texture = ExtResource("5_gco5d")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5j50l"]
+bg_color = Color(0.258824, 0.298039, 0.333333, 1)
+border_width_left = 16
+border_width_top = 16
+border_width_right = 16
+border_width_bottom = 16
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+expand_margin_left = 16.0
+expand_margin_top = 16.0
+expand_margin_right = 16.0
+expand_margin_bottom = 16.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_y5k54"]
+bg_color = Color(0.960784, 0.929412, 0.941176, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+
+[node name="SpaceGameScene" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 17.0
+offset_top = -9.0
+offset_right = 1166.0
+offset_bottom = 627.0
+script = SubResource("GDScript_2kd2x")
+
+[node name="Bg_player" type="Panel" parent="."]
+layout_mode = 0
+offset_left = -17.0
+offset_top = 513.0
+offset_right = 124.0
+offset_bottom = 643.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_65vb1")
+
+[node name="circle" type="Panel" parent="."]
+layout_mode = 0
+offset_left = -151.0
+offset_top = 422.0
+offset_right = 270.0
+offset_bottom = 674.0
+theme_override_styles/panel = SubResource("StyleBoxTexture_imhq2")
+
+[node name="Happiness_Bar" type="ProgressBar" parent="."]
+layout_mode = 0
+offset_left = 126.0
+offset_top = 557.0
+offset_right = 310.0
+offset_bottom = 592.0
+theme_override_styles/background = SubResource("StyleBoxFlat_cnslg")
+
+[node name="Happy" type="Panel" parent="."]
+layout_mode = 0
+offset_left = 132.0
+offset_top = 562.0
+offset_right = 159.0
+offset_bottom = 588.0
+theme_override_styles/panel = SubResource("StyleBoxTexture_6u55k")
+
+[node name="Hunger_Bar" type="ProgressBar" parent="."]
+layout_mode = 0
+offset_left = 113.0
+offset_top = 594.0
+offset_right = 297.0
+offset_bottom = 629.0
+theme_override_styles/background = SubResource("StyleBoxFlat_cnslg")
+max_value = 60.0
+
+[node name="Hunger" type="Panel" parent="."]
+layout_mode = 0
+offset_left = 121.0
+offset_top = 602.0
+offset_right = 153.0
+offset_bottom = 628.0
+theme_override_styles/panel = SubResource("StyleBoxTexture_p4soi")
+
+[node name="Energy_Bar" type="ProgressBar" parent="."]
+layout_mode = 0
+offset_left = 111.0
+offset_top = 520.0
+offset_right = 295.0
+offset_bottom = 555.0
+theme_override_styles/background = SubResource("StyleBoxFlat_cnslg")
+
+[node name="Energy" type="Panel" parent="."]
+layout_mode = 0
+offset_left = 116.0
+offset_top = 528.0
+offset_right = 142.0
+offset_bottom = 549.0
+theme_override_styles/panel = SubResource("StyleBoxTexture_ngd3s")
+
+[node name="Action" type="Panel" parent="."]
+layout_mode = 0
+offset_left = 476.0
+offset_top = 483.0
+offset_right = 1126.0
+offset_bottom = 630.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_5j50l")
+
+[node name="List_Action" type="VBoxContainer" parent="Action"]
+layout_mode = 0
+offset_left = 323.0
+offset_top = 21.0
+offset_right = 628.0
+offset_bottom = 155.0
+
+[node name="Button_Spacewalks" type="Button" parent="Action/List_Action"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_y5k54")
+text = "Spacewalks
+"
+
+[node name="Button_Zero-Gravity" type="Button" parent="Action/List_Action"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_y5k54")
+text = "Excercise"
+
+[node name="Button_Research and Discovery" type="Button" parent="Action/List_Action"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_y5k54")
+text = "Research and Discovery
+"
+
+[node name="Button_Mining and Resource Gathering" type="Button" parent="Action/List_Action"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_y5k54")
+text = "Mining and Resource Gathering
+"
+
+[node name="List_Action_2" type="VBoxContainer" parent="Action"]
+layout_mode = 0
+offset_left = 11.0
+offset_top = 20.0
+offset_right = 316.0
+offset_bottom = 154.0
+
+[node name="Button_Explore" type="Button" parent="Action/List_Action_2"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_y5k54")
+text = "Explore Galaxy"
+
+[node name="Button_Eat" type="Button" parent="Action/List_Action_2"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_y5k54")
+text = "Eat"
+
+[node name="Button_Rest" type="Button" parent="Action/List_Action_2"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_y5k54")
+text = "Rest
+"
+
+[node name="Button_Stargazing" type="Button" parent="Action/List_Action_2"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_y5k54")
+text = "Stargazing "
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="HUD" type="Control" parent="."]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
